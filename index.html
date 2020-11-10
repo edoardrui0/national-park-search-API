@@ -9,7 +9,7 @@
       rel="stylesheet"
       type="text/css"
     />
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="main.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
@@ -23,9 +23,16 @@
             placeholder="Enter a valid US State"
             required
           />
+          <input
+            type="number"
+            name="max-results"
+            class="js-max-results"
+            value="10"
+          />
           <input type="submit" value="Submit" />
         </form>
       </div>
+      <p id="js-error-message" class="error-message"></p>
       <section class="results hidden"></section>
     </div>
 

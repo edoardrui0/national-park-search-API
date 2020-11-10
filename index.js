@@ -1,7 +1,5 @@
 "use strict";
 
-let apiKey = "tZ6NWjkWvoNpgJc6WXhYEPNwl59yJyXbw1U5FNRD";
-
 var myHeaders = new Headers();
 myHeaders.append(
   "Cookie",
@@ -14,14 +12,21 @@ var requestOptions = {
   redirect: "follow",
 };
 
+let apiKey = "tZ6NWjkWvoNpgJc6WXhYEPNwl59yJyXbw1U5FNRD";
+let url = `https://developer.nps.gov/api/v1/parks?api_key=${apiKey}`;
+
 function getParks() {
-  fetch(
-    `https://developer.nps.gov/api/v1/parks?api_key=${apiKey}`,
-    requestOptions
-  )
-    .then((response) => response.json())
+  fetch(url)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
     .then((responseJson) => displayParks(responseJson))
-    .catch((error) => console.log("error" + error));
+    .catch((err) => {
+      $("#js-error-message").text(`Something went wrong: ${err.message}`);
+    });
 }
 
 function displayParks(responseJson) {
@@ -29,12 +34,14 @@ function displayParks(responseJson) {
   $(".results").empty();
   // iterate through the articles array, stopping at the max number of results
   for (let i = 0; i < responseJson.data.length; i++) {
-    let nameOfParks = $('input[name="nationalParkName"]').val();
+    let nameOfParks = $('input[name="nationalParkName"]').val().toUpperCase();
     if (nameOfParks === responseJson.data[i].states) {
       $(".results").append(
-        `<p>${responseJson.data[i].fullName}</p>
+        `<div class="parkInformation">
+          <h4>${responseJson.data[i].fullName}</h4>
           <p>${responseJson.data[i].description}</p>
-          <p><a href="${responseJson.data[i].url}" target="_blank">Click here to visit the park's website</a></p>`
+          <p><a href="${responseJson.data[i].url}" target="_blank">Click here to visit the park's website</a></p>
+         </div>`
       );
     }
   }
@@ -42,10 +49,14 @@ function displayParks(responseJson) {
   $(".results").removeClass("hidden");
 }
 
+// function multipleParkNames() {
+//   let nameOfParks = $('input[name="nationalParkName"]').val();
+// }
+
 function watchForm() {
   $("form").submit((event) => {
     event.preventDefault();
-    let nameOfParks = $('input[name="nationalParkName"]').val();
+    let nameOfParks = $('input[name="nationalParkName"]').val().toUpperCase();
     getParks(nameOfParks);
   });
 }

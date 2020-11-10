@@ -1,0 +1,30 @@
+.wrapper {
+  text-align: center;
+}
+
+form {
+  margin-top: 35px;
+}
+
+.js-max-results {
+  width: 35px;
+}
+
+.parkInformation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 650px;
+  margin: 25px auto 75px auto;
+}
+
+.parkInformation p {
+  margin: 5px;
+  text-align: justify;
+}
+
+.parkInformation a {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
