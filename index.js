@@ -51,12 +51,10 @@ function watchForm() {
     let stateCode = $('input[name="nationalParkName"]').val().toUpperCase();
     let limit = $('input[name="max-results"]').val();
     getParks(stateCode, limit);
-    console.log(stateCode, limit);
   });
 }
 
 $(function () {
   console.log("App loaded! Waiting for submit!");
   watchForm();
-  // getParks("NY,FL", 15);
 });
